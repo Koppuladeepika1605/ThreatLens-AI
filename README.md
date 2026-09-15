@@ -1,35 +1,110 @@
 # ThreatLens AI
-Evidence-Aware Autonomous Network Security Analyst
 
-## What is here
+**Evidence-Aware Autonomous Network Security Analyst**
 
-Member 1's ML pipeline remains in `src/` and `models/`. The unified entry point is
-`src.predictor.predict_threat(flow)`, which performs preprocessing, suspicious
-traffic classification, anomaly detection, attack-family classification,
-deterministic risk scoring, and feature explanation.
+**Detect. Investigate. Explain. Respond.**
 
-Member 2's MVP integration is organized as:
+## 1. Problem
+
+Security teams receive large volumes of network telemetry but need to quickly
+separate normal traffic from suspicious activity, understand why an event was
+flagged, and decide what to do next. Raw model scores alone are not enough for
+an analyst-ready incident workflow.
+
+## 2. Solution
+
+ThreatLens AI combines the existing network threat ML pipeline with a FastAPI
+integration layer, an evidence-aware investigation agent, and a React SOC
+dashboard. The ML pipeline detects and scores the traffic. The agent retrieves
+stored evidence and explains the event without changing the model result.
+
+## 3. Architecture
 
 ```text
-frontend/ React dashboard
-		-> backend/ FastAPI
-		-> src.predictor SecurityEvent
-		-> backend investigation summary and recommendation
-		-> alert stream rendered in the dashboard
+Network flow
+    -> FastAPI /api/predict
+    -> src.predictor.predict_threat()
+    -> standardized Security Event
+    -> in-memory event and traffic store
+    -> Investigation Agent tools
+    -> /api/investigate incident report
+    -> React SOC dashboard
 ```
 
-Detected existing ML files include `src/predictor.py`, `src/risk_engine.py`,
-`src/explainability.py`, the preprocessing and training modules, serialized
-artifacts in `models/`, and evaluation/handoff reports in `outputs/`. There was
-no existing backend, frontend, API, or database before this integration.
+The MVP uses one backend service and one in-memory store. No microservices,
+Docker, authentication, or separate database are required for the demo.
 
-## Run locally
+## 4. Tech Stack
 
-From the repository root, install Python dependencies and start FastAPI:
+- Python 3.12
+- FastAPI and Uvicorn
+- Pydantic
+- React and Vite
+- scikit-learn serialized model artifacts
+- pandas, NumPy, and joblib
+- CSS dashboard styling
+
+## 5. ML Pipeline
+
+The existing Member 1 pipeline is consumed through one public interface:
+
+```python
+from src.predictor import predict_threat
+result = predict_threat(flow)
+```
+
+It performs:
+
+- UNSW-NB15 feature preprocessing
+- Normal versus suspicious classification
+- Isolation Forest anomaly detection
+- Attack-family classification
+- Deterministic risk scoring from `src/risk_engine.py`
+- Predictor-provided feature explanation
+
+The backend does not duplicate preprocessing, classification, anomaly detection,
+or risk calculation.
+
+## 6. Agent Workflow
+
+The lightweight agent lives in `backend/investigation_agent.py`.
+
+Its tools retrieve real application data:
+
+- `get_alert(event_id)` retrieves the stored Security Event.
+- `get_traffic_details(event_id)` retrieves the submitted raw flow.
+- `get_ip_history(source_ip)` retrieves prior registered events for that source.
+- `get_attack_evidence(event_id)` formats classifier and anomaly outputs.
+- `get_shap_explanation(event_id)` returns predictor-provided top features.
+- `calculate_risk(event_id)` returns the risk and severity already produced by
+  the ML pipeline.
+
+The agent produces a structured incident report containing summary, attack type,
+risk, severity, confidence, evidence, reasoning, and recommended actions. It
+does not invent IP history, traffic statistics, model scores, feature values, or
+risk scores. Missing evidence is explicitly reported as unavailable.
+
+## 7. Key Features
+
+- Live dashboard overview populated from `/api/dashboard/stats`
+- Suspicious alert table populated from `/api/alerts`
+- Severity indicators for LOW, MEDIUM, HIGH, and CRITICAL
+- Attack type, risk, and recent threat analytics
+- Click-through incident investigation workspace
+- Real model evidence and top contributing features
+- AI investigation summary and reasoning
+- Reviewed, create-incident, and simulated-block actions
+- Simulated block action never changes firewall or network configuration
+- Visible loading states and API fallback/error messaging
+- Responsive SOC layout for desktop and mobile screens
+
+## 8. How to Run
+
+From the repository root:
 
 ```powershell
 pip install -r requirements.txt
-python -m uvicorn backend.main:app --reload --port 8000
+python -m uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 In a second terminal:
@@ -37,47 +112,60 @@ In a second terminal:
 ```powershell
 cd frontend
 npm install
-npm run dev
+npm run dev -- --port 5174
 ```
 
-Open `http://127.0.0.1:5173/`. The dashboard can load a demo event or accept a
-raw UNSW-NB15-compatible flow as JSON.
+Open:
 
-## API
+```text
+http://127.0.0.1:5174/
+```
 
-- `GET /api/health` confirms the service is running.
-- `POST /api/predict` accepts raw feature fields or `{ "flow": { ... } }` and
-	returns a typed standardized Security Event from the real ML pipeline.
-- `POST /api/investigate` accepts the same input and returns the event plus
-	evidence and a recommendation. It also accepts `{ "event_id": "..." }`
-	for investigating an event already returned by `/api/predict`.
-- `GET /api/alerts` returns recent suspicious Security Events.
-- `GET /api/alerts/{event_id}` returns one suspicious event by ID.
-- `GET /api/dashboard/stats` returns traffic totals, severity totals, attack
-	distribution, and recent alerts.
-- `GET /api/sample` runs the documented demo flow through the real ML pipeline.
+Swagger API documentation is available at:
 
-Risk is never calculated by the investigation layer. It is preserved from the
-deterministic `src.risk_engine` output. The alert feed is intentionally
-in-memory for this hackathon MVP, so it resets when FastAPI restarts.
+```text
+http://127.0.0.1:8000/docs
+```
 
-The serialized models currently emit scikit-learn compatibility warnings when
-loaded under the local environment's older scikit-learn version. Inference was
-verified successfully; retraining or changing artifacts is outside this
-integration task.
+## 9. Demo Workflow
 
-## Investigation agent
+1. Open the dashboard and confirm `LIVE TELEMETRY`.
+2. Click `Load model event` to send the real demo flow through the ML model.
+3. Confirm the event appears in the alert table with attack type, risk, and severity.
+4. Select the alert or click `View`.
+5. Click `Investigate with AI`.
+6. Show the actual suspicious probability, anomaly score, attack probability,
+   top features, evidence, agent reasoning, and recommended response.
+7. Demonstrate `Mark reviewed` and `Create incident` as local UI actions.
+8. Demonstrate `Simulate block IP`; it only displays a confirmation and performs
+   no firewall action.
 
-The lightweight agent is implemented in `backend/investigation_agent.py`. Its
-tools retrieve only registered application data:
+The dashboard also has an isolated demo fallback if the API is unavailable. It
+is labeled `DEMO DATA` and is not used when the live API is reachable.
 
-- `get_alert(event_id)` retrieves the standardized ML event.
-- `get_traffic_details(event_id)` retrieves the original submitted flow.
-- `get_ip_history(source_ip)` searches previously registered events.
-- `get_attack_evidence(event_id)` formats classifier and anomaly outputs.
-- `get_shap_explanation(event_id)` returns predictor-provided explanation features.
-- `calculate_risk(event_id)` returns the risk and severity already produced by
-	`src.risk_engine` through the predictor.
+## 10. Future Improvements
 
-The agent does not classify traffic, invent history, generate model scores, or
-recalculate risk. Missing evidence is returned as explicitly unavailable.
+- Replace the in-memory event store with SQLite or a managed persistence layer.
+- Align the serialized model and local scikit-learn versions to remove load warnings.
+- Add real event streaming and time-windowed trend storage.
+- Add analyst authentication and role-based access control.
+- Connect approved response actions to a controlled orchestration system.
+- Calibrate the model on live organizational traffic before production use.
+
+## API Summary
+
+- `GET /api/health`
+- `POST /api/predict`
+- `POST /api/investigate`
+- `GET /api/alerts`
+- `GET /api/alerts/{event_id}`
+- `GET /api/dashboard/stats`
+- `GET /api/sample`
+
+## Demo Limitations
+
+The event and agent stores are in memory and reset when FastAPI restarts. The
+serialized model files emit scikit-learn version compatibility warnings in the
+current local environment, but the tested inference path completes successfully.
+The project is a hackathon MVP based on UNSW-NB15 telemetry and is not a claim
+of production-ready perimeter protection.
