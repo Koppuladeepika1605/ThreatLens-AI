@@ -111,13 +111,26 @@ and the operational alert queue in one dense SOC workspace.
 
 ![ThreatLens AI SOC overview](frontend/public/threatlens-overview.png)
 
-### Evidence-aware investigation
+### Live security alerts
+
+The alert queue presents event IDs, attack types, risk, severity, source context,
+timestamps, and the action that opens the investigation workspace.
+
+![ThreatLens AI live alerts](frontend/public/threatlens-alerts.png)
+
+### Investigation evidence
 
 Selecting an alert opens the real investigation agent output, including model
-evidence, top contributing features, reasoning, traffic context, and controlled
-response actions.
+evidence, top contributing features, reasoning, and traffic context.
 
-![ThreatLens AI investigation workspace](frontend/public/threatlens-investigation.png)
+![ThreatLens AI investigation evidence](frontend/public/threatlens-investigation-evidence.png)
+
+### Recommended response
+
+The response panel keeps analyst actions visible and makes block behavior
+explicitly simulation-only.
+
+![ThreatLens AI recommended response](frontend/public/threatlens-response.png)
 
 ## 8. How to Run
 
