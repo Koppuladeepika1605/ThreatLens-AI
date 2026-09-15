@@ -1,0 +1,39 @@
+{
+  "num_classes": 10,
+  "classes": [
+    "Analysis",
+    "Backdoor",
+    "DoS",
+    "Exploits",
+    "Fuzzers",
+    "Generic",
+    "Normal",
+    "Reconnaissance",
+    "Shellcode",
+    "Worms"
+  ],
+  "class_to_index": {
+    "Analysis": 0,
+    "Backdoor": 1,
+    "DoS": 2,
+    "Exploits": 3,
+    "Fuzzers": 4,
+    "Generic": 5,
+    "Normal": 6,
+    "Reconnaissance": 7,
+    "Shellcode": 8,
+    "Worms": 9
+  },
+  "index_to_class": {
+    "0": "Analysis",
+    "1": "Backdoor",
+    "2": "DoS",
+    "3": "Exploits",
+    "4": "Fuzzers",
+    "5": "Generic",
+    "6": "Normal",
+    "7": "Reconnaissance",
+    "8": "Shellcode",
+    "9": "Worms"
+  }
+}

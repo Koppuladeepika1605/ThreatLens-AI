@@ -1,0 +1,265 @@
+=====================================================================================
+               THREATLENS AI - UNSW-NB15 DATASET INSPECTION REPORT
+=====================================================================================
+Project Root:        C:\Users\kbhan\OneDrive\Desktop\ThreatLens-AI
+Raw Data Directory:  C:\Users\kbhan\OneDrive\Desktop\ThreatLens-AI\data\raw
+Training Set File:   UNSW_NB15_training-set.csv (Exists: True)
+Testing Set File:    UNSW_NB15_testing-set.csv (Exists: True)
+
+Loading raw CSV datasets into pandas...
+Datasets successfully loaded!
+-------------------------------------------------------------------------------------
+1. DATASET DIMENSIONS & FILE SIZES
+-------------------------------------------------------------------------------------
+Training Set (UNSW_NB15_training-set.csv):
+  - Total Rows:    173,436
+  - Total Columns: 45
+  - File Size:     30.51 MB
+
+Testing Set (UNSW_NB15_testing-set.csv):
+  - Total Rows:    82,332
+  - Total Columns: 45
+  - File Size:     14.67 MB
+
+Combined Total Records: 255,768
+
+2. SCHEMA COMPARISON & COMPATIBILITY
+-------------------------------------------------------------------------------------
+Exact Column Alignment (names and sequence identical): True
+  - All 45 column names and ordering match identically between train and test.
+Data type differences detected (17 columns):
+  - Column 'smean': Train=float64 vs Test=int64
+  - Column 'dmean': Train=float64 vs Test=int64
+  - Column 'trans_depth': Train=float64 vs Test=int64
+  - Column 'response_body_len': Train=float64 vs Test=int64
+  - Column 'ct_srv_src': Train=float64 vs Test=int64
+  - Column 'ct_state_ttl': Train=float64 vs Test=int64
+  - Column 'ct_dst_ltm': Train=float64 vs Test=int64
+  - Column 'ct_src_dport_ltm': Train=float64 vs Test=int64
+  - Column 'ct_dst_sport_ltm': Train=float64 vs Test=int64
+  - Column 'ct_dst_src_ltm': Train=float64 vs Test=int64
+  - Column 'is_ftp_login': Train=float64 vs Test=int64
+  - Column 'ct_ftp_cmd': Train=float64 vs Test=int64
+  - Column 'ct_flw_http_mthd': Train=float64 vs Test=int64
+  - Column 'ct_src_ltm': Train=float64 vs Test=int64
+  - Column 'ct_srv_dst': Train=float64 vs Test=int64
+  - Column 'is_sm_ips_ports': Train=float64 vs Test=int64
+  - Column 'label': Train=float64 vs Test=int64
+  Note: Several integer columns in train appear as float64 due to the presence of 1 NaN value in train.
+
+3. COLUMN NAMES, DATA TYPES & MISSING VALUES PER COLUMN
+-------------------------------------------------------------------------------------
+#    | Column Name          | Train Type   | Test Type    | Train NaN  | Test NaN  
+-------------------------------------------------------------------------------------
+1    | id                   | int64        | int64        | 0          | 0         
+2    | dur                  | float64      | float64      | 0          | 0         
+3    | proto                | object       | object       | 0          | 0         
+4    | service              | object       | object       | 0          | 0         
+5    | state                | object       | object       | 0          | 0         
+6    | spkts                | int64        | int64        | 0          | 0         
+7    | dpkts                | int64        | int64        | 0          | 0         
+8    | sbytes               | int64        | int64        | 0          | 0         
+9    | dbytes               | int64        | int64        | 0          | 0         
+10   | rate                 | float64      | float64      | 0          | 0         
+11   | sttl                 | int64        | int64        | 0          | 0         
+12   | dttl                 | int64        | int64        | 0          | 0         
+13   | sload                | float64      | float64      | 0          | 0         
+14   | dload                | float64      | float64      | 0          | 0         
+15   | sloss                | int64        | int64        | 0          | 0         
+16   | dloss                | int64        | int64        | 0          | 0         
+17   | sinpkt               | float64      | float64      | 0          | 0         
+18   | dinpkt               | float64      | float64      | 0          | 0         
+19   | sjit                 | float64      | float64      | 0          | 0         
+20   | djit                 | float64      | float64      | 0          | 0         
+21   | swin                 | int64        | int64        | 0          | 0         
+22   | stcpb                | int64        | int64        | 0          | 0         
+23   | dtcpb                | int64        | int64        | 0          | 0         
+24   | dwin                 | int64        | int64        | 0          | 0         
+25   | tcprtt               | float64      | float64      | 0          | 0         
+26   | synack               | float64      | float64      | 0          | 0         
+27   | ackdat               | float64      | float64      | 0          | 0         
+28   | smean                | float64      | int64        | 1          | 0         
+29   | dmean                | float64      | int64        | 1          | 0         
+30   | trans_depth          | float64      | int64        | 1          | 0         
+31   | response_body_len    | float64      | int64        | 1          | 0         
+32   | ct_srv_src           | float64      | int64        | 1          | 0         
+33   | ct_state_ttl         | float64      | int64        | 1          | 0         
+34   | ct_dst_ltm           | float64      | int64        | 1          | 0         
+35   | ct_src_dport_ltm     | float64      | int64        | 1          | 0         
+36   | ct_dst_sport_ltm     | float64      | int64        | 1          | 0         
+37   | ct_dst_src_ltm       | float64      | int64        | 1          | 0         
+38   | is_ftp_login         | float64      | int64        | 1          | 0         
+39   | ct_ftp_cmd           | float64      | int64        | 1          | 0         
+40   | ct_flw_http_mthd     | float64      | int64        | 1          | 0         
+41   | ct_src_ltm           | float64      | int64        | 1          | 0         
+42   | ct_srv_dst           | float64      | int64        | 1          | 0         
+43   | is_sm_ips_ports      | float64      | int64        | 1          | 0         
+44   | attack_cat           | object       | object       | 1          | 0         
+45   | label                | float64      | int64        | 1          | 0         
+
+4. DATA INTEGRITY: MISSING VALUES, ANOMALIES & DUPLICATES
+-------------------------------------------------------------------------------------
+Missing Values Summary:
+  - Training Set Total NaNs: 18
+    Notice: Exactly 18 columns in training have 1 NaN value each:
+    Columns affected: ['smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports', 'attack_cat', 'label']
+    Root Cause Analysis: Row index 173435 (id=173436) in the raw CSV is truncated at column 27.
+  - Testing Set Total NaNs:  0 (0 missing values)
+
+Duplicate Rows (Entire row including 'id'):
+  - Training: 0
+  - Testing:  0
+Duplicate Rows (Excluding 'id' column):
+  - Training: 65,914 (38.00%)
+  - Testing:  26,387 (32.05%)
+    Explanation: Network traffic traces often have identical flow characteristics
+    (e.g., standard SYN probes, DNS queries, repetitive beaconing).
+
+Numerical Columns Count:   41
+Categorical Columns Count: 4 (['proto', 'service', 'state', 'attack_cat'])
+Infinite (+/- inf) values in Training: None
+Infinite (+/- inf) values in Testing:  None
+Empty/whitespace strings in Training categorical: None
+Empty/whitespace strings in Testing categorical:  None
+
+5. DEEP DIVE: KEY COLUMNS INVESTIGATION
+-------------------------------------------------------------------------------------
+COLUMN: 'label'
+  - Data Type:      Train=float64 | Test=int64
+  - Unique Values:  Train=2 | Test=2
+  - Top Frequencies in Training:
+      1.0                      :  117,435 (67.71%)
+      0.0                      :   56,000 (32.29%)
+      NaN (missing)            :        1 ( 0.00%)
+
+COLUMN: 'attack_cat'
+  - Data Type:      Train=object | Test=object
+  - Unique Values:  Train=10 | Test=10
+  - Top Frequencies in Training:
+      'Normal'                 :   56,000 (32.29%)
+      'Generic'                :   38,354 (22.11%)
+      'Exploits'               :   33,293 (19.20%)
+      'Fuzzers'                :   18,096 (10.43%)
+      'DoS'                    :   12,253 ( 7.06%)
+      'Reconnaissance'         :   10,438 ( 6.02%)
+      'Analysis'               :    2,000 ( 1.15%)
+      'Backdoor'               :    1,744 ( 1.01%)
+      'Shellcode'              :    1,127 ( 0.65%)
+      'Worms'                  :      130 ( 0.07%)
+
+COLUMN: 'proto'
+  - Data Type:      Train=object | Test=object
+  - Unique Values:  Train=133 | Test=131
+  - Values exclusive to Train (2): ['icmp', 'rtp']
+  - Top Frequencies in Training:
+      'tcp'                    :   79,741 (45.98%)
+      'udp'                    :   61,593 (35.51%)
+      'unas'                   :   12,084 ( 6.97%)
+      'arp'                    :    2,859 ( 1.65%)
+      'ospf'                   :    2,591 ( 1.49%)
+      'sctp'                   :    1,145 ( 0.66%)
+      'any'                    :      300 ( 0.17%)
+      'gre'                    :      225 ( 0.13%)
+      'mobile'                 :      201 ( 0.12%)
+      'swipe'                  :      201 ( 0.12%)
+
+COLUMN: 'service'
+  - Data Type:      Train=object | Test=object
+  - Unique Values:  Train=13 | Test=13
+  - Top Frequencies in Training:
+      '-'                      :   93,998 (54.20%)
+      'dns'                    :   45,652 (26.32%)
+      'http'                   :   18,669 (10.76%)
+      'smtp'                   :    5,037 ( 2.90%)
+      'ftp-data'               :    3,987 ( 2.30%)
+      'ftp'                    :    3,425 ( 1.97%)
+      'ssh'                    :    1,302 ( 0.75%)
+      'pop3'                   :    1,099 ( 0.63%)
+      'dhcp'                   :       94 ( 0.05%)
+      'snmp'                   :       80 ( 0.05%)
+
+COLUMN: 'state'
+  - Data Type:      Train=object | Test=object
+  - Unique Values:  Train=9 | Test=7
+  - Values exclusive to Train (4): ['ECO', 'PAR', 'URN', 'no']
+  - Values exclusive to Test (2):  ['ACC', 'CLO']
+  - Top Frequencies in Training:
+      'INT'                    :   80,587 (46.46%)
+      'FIN'                    :   77,620 (44.75%)
+      'CON'                    :   13,147 ( 7.58%)
+      'REQ'                    :    1,984 ( 1.14%)
+      'RST'                    :       83 ( 0.05%)
+      'ECO'                    :       12 ( 0.01%)
+      'PAR'                    :        1 ( 0.00%)
+      'URN'                    :        1 ( 0.00%)
+      'no'                     :        1 ( 0.00%)
+
+6. TARGET COLUMNS & CLASS DISTRIBUTION
+-------------------------------------------------------------------------------------
+Target Column Identification:
+  A. 'label': Binary target (0 = Normal, 1 = Attack)
+  B. 'attack_cat': Multi-class attack taxonomy (Normal + 9 distinct attack categories)
+
+A. Binary Target ('label') Breakdown:
+Class          | Training Count   | Train %    | Testing Count    | Test %     | Combined Count   | Combined %
+-------------------------------------------------------------------------------------------------
+Normal (0)     |           56,000 |     32.29% |           37,000 |     44.94% |           93,000 |     36.36%
+Attack (1)     |          117,435 |     67.71% |           45,332 |     55.06% |          162,767 |     63.64%
+Corrupt/NaN    |                1 |    0.0006% |                0 |    0.0000% |                1 |    0.0004%
+
+B. Attack Category ('attack_cat') Detailed Distribution:
+Category           | Training Count   | Train %    | Testing Count    | Test %     | Combined Count   | Combined %
+---------------------------------------------------------------------------------------------------------
+Analysis           |            2,000 |      1.15% |              677 |      0.82% |            2,677 |      1.05%
+Backdoor           |            1,744 |      1.01% |              583 |      0.71% |            2,327 |      0.91%
+DoS                |           12,253 |      7.06% |            4,089 |      4.97% |           16,342 |      6.39%
+Exploits           |           33,293 |     19.20% |           11,132 |     13.52% |           44,425 |     17.37%
+Fuzzers            |           18,096 |     10.43% |            6,062 |      7.36% |           24,158 |      9.45%
+Generic            |           38,354 |     22.11% |           18,871 |     22.92% |           57,225 |     22.37%
+Normal             |           56,000 |     32.29% |           37,000 |     44.94% |           93,000 |     36.36%
+Reconnaissance     |           10,438 |      6.02% |            3,496 |      4.25% |           13,934 |      5.45%
+Shellcode          |            1,127 |      0.65% |              378 |      0.46% |            1,505 |      0.59%
+Worms              |              130 |      0.07% |               44 |      0.05% |              174 |      0.07%
+
+Exported class distribution table to: C:\Users\kbhan\OneDrive\Desktop\ThreatLens-AI\outputs\class_distribution.csv
+
+7. FEATURE CATALOG & RECOMMENDED EXCLUSIONS
+-------------------------------------------------------------------------------------
+  - Drop 'id': Synthetic identifier/sequence number. Carries zero physical network information. If retained, trees or linear models will memorize row index order, causing false predictive power and data leakage.
+  - Drop 'label': Ground-truth binary target. Must be separated into target vector y_binary to prevent target leakage.
+  - Drop 'attack_cat': Ground-truth multi-class target. Must be separated into target vector y_multiclass to prevent target leakage.
+
+Total Columns in Dataset:               45
+Target and Identifier Columns Excluded: 3 (['id', 'label', 'attack_cat'])
+Total Available ML Feature Columns:     42
+
+Available Features Grouped by Category:
+  - Flow/Packet Attributes (30): ['dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len']
+  - Content & Flag Attributes (4): ['is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'is_sm_ips_ports']
+  - Connection/Window Aggregates (8): ['ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'ct_src_ltm', 'ct_srv_dst']
+
+8. CLASS IMBALANCE EVALUATION
+-------------------------------------------------------------------------------------
+Binary Level:
+  - Train Set:  117,435 Attacks (67.71%) vs 56,000 Normal (32.29%)
+  - Test Set:   45,332 Attacks (55.06%) vs 37,000 Normal (44.94%)
+  - Finding: Attack traffic represents the majority class in both splits (67.7% in train, 55.1% in test).
+
+Multi-Class Level:
+  - Extreme disproportion among attack categories:
+    * Dominant Attack:  Generic with 38,354 samples (22.1142%)
+    * Rare Attack:      Worms with only 130 samples (0.075%)
+    * Multi-Class Imbalance Ratio: 295.0 : 1
+    * Categories with severe low frequency (< 2,500 samples in train): Worms (130), Shellcode (1,127), Backdoor (1,744), Analysis (2,000).
+
+9. PREPROCESSING ACTION PLAN & PIPELINE RECOMMENDATIONS
+-------------------------------------------------------------------------------------
+  1. Corrupt Row Remediation: Drop or handle the single truncated row (index 173435) in train.
+  2. Feature Separation: Isolate 'id' (drop), 'label' (y_binary), and 'attack_cat' (y_multi) from X.
+  3. Categorical Preprocessing:
+     - 'proto': 133 unique values. Top 3 ('tcp', 'udp', 'unas') constitute 88.5% of records. Group rare protocols (<0.1%) into 'other' or use Target/Frequency/Ordinal encoding.
+     - 'service': 13 unique values. 54.2% is '-' (no application service). Treat '-' as a valid category 'none'. Use One-Hot or Ordinal Encoding.
+     - 'state': 9 unique in train, 7 in test. Test introduces 'ACC' and 'CLO' unseen in train, while train has 'ECO', 'PAR', 'URN', 'no'. Categorical encoders must specify handle_unknown='ignore'.
+  4. Numerical Feature Scaling: Features like 'dur', 'sbytes', 'dbytes', 'sload', 'dload' span orders of magnitude with high kurtosis and extreme outliers. Apply RobustScaler or quantile transformations; avoid standard min-max which collapses under extreme spikes.
+  5. Handling Multi-Class Imbalance: When progressing to multi-class classification, use class-weighted loss functions (e.g., class_weight='balanced' or scale_pos_weight) and consider training-only SMOTE/ADASYN for ultra-rare classes like Worms.
+=====================================================================================

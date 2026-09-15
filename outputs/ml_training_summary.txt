@@ -1,0 +1,59 @@
+=====================================================================================
+           THREATLENS AI - MACHINE LEARNING PIPELINE TRAINING SUMMARY
+=====================================================================================
+Execution Time:                   105.42 seconds
+Dataset:                          UNSW-NB15 Network Intrusion Dataset
+Training rows after cleaning:     173,435
+Testing rows:                     82,332
+Raw feature count:                42 (39 numerical, 3 categorical)
+Transformed features:             194
+
+1. BINARY THREAT CLASSIFIER
+-------------------------------------------------------------------------------------
+Model Architecture:               HistGradientBoostingClassifier
+Target:                           label (0 = Normal, 1 = Attack)
+Class Weighting:                  balanced
+Accuracy:                         90.62%
+Precision:                        87.67%
+Recall:                           96.54%
+F1-Score:                         0.9189
+ROC-AUC:                          0.9846
+Confusion Matrix (TN, FP, FN, TP): [30,845, 6,155, 1,569, 43,763]
+Model Artifact:                   C:\Users\kbhan\OneDrive\Desktop\ThreatLens-AI\models\suspicious_classifier.pkl
+
+2. MULTICLASS ATTACK-TYPE CLASSIFIER
+-------------------------------------------------------------------------------------
+Model Architecture:               HistGradientBoostingClassifier
+Target Taxonomy:                  attack_cat (excluding Normal)
+Number of Attack Families:        9 (['Analysis', 'Backdoor', 'DoS', 'Exploits', 'Fuzzers', 'Generic', 'Reconnaissance', 'Shellcode', 'Worms'])
+Accuracy on Attack Test Set:      74.22%
+Macro Precision:                  54.27%
+Macro Recall:                     63.49%
+Macro F1-Score:                   0.5359
+Weighted F1-Score:                0.7824
+Model Artifact:                   C:\Users\kbhan\OneDrive\Desktop\ThreatLens-AI\models\attack_classifier.pkl
+
+3. ANOMALY DETECTION ENGINE
+-------------------------------------------------------------------------------------
+Model Architecture:               IsolationForest
+Training Profile:                 Trained solely on benign (Normal) network traffic
+Contamination Configuration:      0.05
+Anomaly Recall (Attack Catch):    28.06%
+Anomaly Precision:                85.13%
+Model Artifact:                   C:\Users\kbhan\OneDrive\Desktop\ThreatLens-AI\models\anomaly_detector.pkl
+
+4. EXPLAINABILITY
+-------------------------------------------------------------------------------------
+Framework:                        Scikit-Learn Native Permutation Importance
+Offline Status:                   SHAP package unavailable in offline environment; native permutation F1 used.
+Top Feature Importance Plot:      C:\Users\kbhan\OneDrive\Desktop\ThreatLens-AI\outputs\binary_feature_importance.png
+
+5. KNOWN LIMITATIONS
+-------------------------------------------------------------------------------------
+  1. Highly imbalanced rare attacks: Classes with very low sample counts (e.g. Worms with only 44 test samples)
+     exhibit lower macro recall compared to dominant classes like Generic and Exploits.
+  2. Non-IID network temporal shifts: Synthetically split lab datasets like UNSW-NB15 may suffer distribution
+     shift when applied to live production enterprise environments without domain adaptation.
+  3. Note on Production Readiness: These models are trained for the ThreatLens AI hackathon demonstration
+     pipeline and should undergo real-world canary calibration before critical perimeter deployment.
+=====================================================================================

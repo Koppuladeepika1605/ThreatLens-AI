@@ -1,0 +1,45 @@
+{
+  "event_id": "EVT-31B8472A",
+  "timestamp": "2026-09-15T07:03:00.815486+00:00",
+  "source_ip": "192.168.1.105",
+  "destination_ip": "10.0.0.12",
+  "protocol": "ospf",
+  "is_suspicious": true,
+  "suspicious_probability": 0.9991,
+  "is_anomaly": false,
+  "anomaly_score": 0.4435,
+  "attack_type": "Backdoor",
+  "attack_probability": 0.35,
+  "risk_score": 68,
+  "severity": "HIGH",
+  "explanation": {
+    "method": "Permutation/Model-based",
+    "top_features": [
+      {
+        "feature": "smean",
+        "importance": 0.1179,
+        "direction": "decreases_risk"
+      },
+      {
+        "feature": "dmean",
+        "importance": 0.0896,
+        "direction": "decreases_risk"
+      },
+      {
+        "feature": "dbytes",
+        "importance": 0.056,
+        "direction": "decreases_risk"
+      },
+      {
+        "feature": "sbytes",
+        "importance": 0.0554,
+        "direction": "decreases_risk"
+      },
+      {
+        "feature": "ct_srv_src",
+        "importance": 0.0493,
+        "direction": "decreases_risk"
+      }
+    ]
+  }
+}

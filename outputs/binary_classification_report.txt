@@ -1,0 +1,13 @@
+ThreatLens AI - Binary Threat Classification Report
+============================================================
+              precision    recall  f1-score   support
+
+  Normal (0)     0.9516    0.8336    0.8887     37000
+  Attack (1)     0.8767    0.9654    0.9189     45332
+
+    accuracy                         0.9062     82332
+   macro avg     0.9141    0.8995    0.9038     82332
+weighted avg     0.9104    0.9062    0.9053     82332
+
+
+ROC-AUC Score: 0.9846

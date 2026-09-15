@@ -1,0 +1,69 @@
+=====================================================================================
+           THREATLENS AI - DATA PREPROCESSING & PIPELINE REPORT
+=====================================================================================
+Source Training File:     C:\Users\kbhan\OneDrive\Desktop\ThreatLens-AI\data\raw\UNSW_NB15_training-set.csv
+Source Testing File:      C:\Users\kbhan\OneDrive\Desktop\ThreatLens-AI\data\raw\UNSW_NB15_testing-set.csv
+Original Training Rows:   173,436
+Corrupt/Truncated Dropped: 1 (id=173436, truncated at column 27)
+Cleaned Training Rows:    173,435
+Testing Rows:             82,332
+Total Operational Rows:   255,767
+-------------------------------------------------------------------------------------
+
+1. FEATURE CATALOG & TRANSFORMED DIMENSIONS
+-------------------------------------------------------------------------------------
+Original Columns in CSV:          45
+Excluded Non-Features:            3 ('id', 'label', 'attack_cat')
+Raw Input ML Features:            42
+  - Numerical Features Count:     39
+  - Categorical Features Count:   3 (['proto', 'service', 'state'])
+Final Transformed Feature Count:  194
+
+2. TARGET VARIABLE DISTRIBUTIONS
+-------------------------------------------------------------------------------------
+A. Binary Target ('label'):
+  - Training Set:
+      * Normal (0):   56,000 (32.29%)
+      * Attack (1):  117,435 (67.71%)
+  - Testing Set:
+      * Normal (0):   37,000 (44.94%)
+      * Attack (1):   45,332 (55.06%)
+
+B. Multiclass Attack Taxonomy ('attack_cat'):
+  Category           | Train Count    | Train %   | Test Count     | Test %   
+  ----------------------------------------------------------------------
+  Analysis           |          2,000 |     1.15% |            677 |     0.82%
+  Backdoor           |          1,744 |     1.01% |            583 |     0.71%
+  DoS                |         12,253 |     7.06% |          4,089 |     4.97%
+  Exploits           |         33,293 |    19.20% |         11,132 |    13.52%
+  Fuzzers            |         18,096 |    10.43% |          6,062 |     7.36%
+  Generic            |         38,354 |    22.11% |         18,871 |    22.92%
+  Normal             |         56,000 |    32.29% |         37,000 |    44.94%
+  Reconnaissance     |         10,438 |     6.02% |          3,496 |     4.25%
+  Shellcode          |          1,127 |     0.65% |            378 |     0.46%
+  Worms              |            130 |     0.07% |             44 |     0.05%
+
+3. DATA LEAKAGE PREVENTION & PIPELINE CONFIGURATION
+-------------------------------------------------------------------------------------
+  * Fit Isolation: ColumnTransformer fitted exclusively on X_train.
+  * Test Set Integrity: X_test strictly transformed via .transform(). No test-set fitting occurred.
+  * Numerical Pipeline: SimpleImputer(strategy='median') learned medians from X_train only.
+  * Categorical Pipeline: OneHotEncoder(handle_unknown='ignore', sparse_output=False).
+    - Service '-' preserved as valid category 'no application service'.
+    - Novel test categories (e.g. states 'ACC', 'CLO') cleanly map to zeros without error.
+  * Scaling Status: Optional scaling = False. Raw tree split boundaries preserved for XGBoost.
+  * Resampling Status: SMOTE = False. No synthetic distortion applied to training or testing distributions.
+
+4. AUTOMATED VALIDATION CHECKS
+-------------------------------------------------------------------------------------
+  [PASS] Transformed matrices have zero NaNs (train=0, test=0).
+  [PASS] Feature dimensionality perfectly matches across train, test, and feature_names catalog (194 columns).
+  [PASS] Row counts for X and target vectors match identically.
+  [PASS] Leakage verification: 'id', 'label', and 'attack_cat' successfully absent from feature matrices.
+
+5. SAVED ARTIFACTS
+-------------------------------------------------------------------------------------
+  - preprocessor   : C:\Users\kbhan\OneDrive\Desktop\ThreatLens-AI\models\preprocessor.pkl
+  - feature_names  : C:\Users\kbhan\OneDrive\Desktop\ThreatLens-AI\models\feature_names.json
+  - label_encoder  : C:\Users\kbhan\OneDrive\Desktop\ThreatLens-AI\models\label_encoder.json
+=====================================================================================
