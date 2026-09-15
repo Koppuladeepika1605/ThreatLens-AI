@@ -86,17 +86,38 @@ risk scores. Missing evidence is explicitly reported as unavailable.
 
 ## 7. Key Features
 
+- Premium dark navy/cyan SOC dashboard with responsive command-center layout
 - Live dashboard overview populated from `/api/dashboard/stats`
 - Suspicious alert table populated from `/api/alerts`
 - Severity indicators for LOW, MEDIUM, HIGH, and CRITICAL
 - Attack type, risk, and recent threat analytics
+- Searchable live alert queue with event IDs, IPs, attack types, risk, and status
 - Click-through incident investigation workspace
 - Real model evidence and top contributing features
 - AI investigation summary and reasoning
+- Model evidence meters for suspicious, anomaly, and attack probabilities
+- System health indicators for ML models, agent system, and database
 - Reviewed, create-incident, and simulated-block actions
 - Simulated block action never changes firewall or network configuration
-- Visible loading states and API fallback/error messaging
+- Visible loading, empty, unavailable, and API error states
 - Responsive SOC layout for desktop and mobile screens
+
+## Screenshots
+
+### SOC overview
+
+The overview combines live KPIs, attack distribution, risk trend, recent alerts,
+and the operational alert queue in one dense SOC workspace.
+
+![ThreatLens AI SOC overview](frontend/public/threatlens-overview.png)
+
+### Evidence-aware investigation
+
+Selecting an alert opens the real investigation agent output, including model
+evidence, top contributing features, reasoning, traffic context, and controlled
+response actions.
+
+![ThreatLens AI investigation workspace](frontend/public/threatlens-investigation.png)
 
 ## 8. How to Run
 
@@ -140,8 +161,8 @@ http://127.0.0.1:8000/docs
 8. Demonstrate `Simulate block IP`; it only displays a confirmation and performs
    no firewall action.
 
-The dashboard also has an isolated demo fallback if the API is unavailable. It
-is labeled `DEMO DATA` and is not used when the live API is reachable.
+If the API is unavailable, the dashboard keeps the layout available but shows
+explicit unavailable/error states instead of inventing metrics or alerts.
 
 ## 10. Future Improvements
 
