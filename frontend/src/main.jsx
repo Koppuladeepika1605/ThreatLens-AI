@@ -118,6 +118,7 @@ function App() {
             <label className="search-box"><span>⌕</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search IP, Event ID, attack type..." aria-label="Search alerts" /></label>
             <div className="monitoring-status"><i /> <span>SYSTEM ONLINE</span><small>Monitoring active</small></div>
             <button className="notification" aria-label={`${alerts.length} alerts`} onClick={() => document.getElementById('alerts')?.scrollIntoView({ behavior: 'smooth' })}>◌<b>{alerts.length}</b></button>
+            <button className="load-event-button" onClick={loadModelEvent}>Load model event <span>+</span></button>
             <div className="profile"><span>AK</span><div><strong>Analyst</strong><small>Security team</small></div></div>
           </div>
         </header>
